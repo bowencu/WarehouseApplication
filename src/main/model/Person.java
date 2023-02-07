@@ -2,6 +2,7 @@ package model;
 
 // Represents a shopper with a name, remaining balance, cart of unpaid products, and products purchased.
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Person {
@@ -14,21 +15,28 @@ public class Person {
     public Person(String name) {
         this.name = name;
         balance = 0;
+        cart = new ArrayList<>();
+        inventory = new ArrayList<>();
+    }
+
+    // REQUIRES: product price <= balance
+    // MODIFIES: this
+    // EFFECTS: deducts product price from balance
+    public void makePurchase(Product product) {
+        balance -= product.getPrice();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds product to this person's inventory
+    public void addToInventory(Product product) {
+        inventory.add(product);
     }
 
     // REQUIRES: product is in this person's inventory
     // MODIFIES: this
     // EFFECTS: sells product from a person's inventory by removing it
-    public void sell(Product product) {
+    public void removeFromInventory(Product product) {
         inventory.remove(product);
-    }
-
-    // REQUIRES: product price <= balance
-    // MODIFIES: this
-    // EFFECTS: adds product to this person's inventory and deducts product price from balance
-    public void buy(Product product) {
-        balance -= product.getPrice();
-        inventory.add(product);
     }
 
     // REQUIRES: amount > 0

@@ -6,29 +6,27 @@ public class Product {
     private String title;
     private double price;
     private boolean onSale;
-    private double salePrice;
     private Category category;
     private boolean used;
     private String description;
     private Person owner;
 
-    // EFFECTS: creates a new product listing for sale
-    public Product(String title, double price, Category category, boolean used) {
+    // EFFECTS: constructs a new product listing for sale
+    public Product(String title, double price, Category category, boolean used, Person owner) {
         this.title = title;
         this.price = price;
         onSale = false;
-        salePrice = price;
         this.category = category;
         this.used = used;
         description = "";
+        this.owner = owner;
     }
 
     // MODIFIES: this
-    // EFFECTS: changes product owner to new buyer
-    public void buy(Person buyer) {
+    // EFFECTS: switches the product's ownership to the buyer
+    public void switchOwner(Person buyer) {
         owner = buyer;
     }
-
 
     // GETTERS
     public String getTitle() {
@@ -43,10 +41,6 @@ public class Product {
         return onSale;
     }
 
-    public double getSalePrice() {
-        return salePrice;
-    }
-
     public Category getCategory() {
         return category;
     }
@@ -57,5 +51,9 @@ public class Product {
 
     public String getDescription() {
         return description;
+    }
+
+    public Person getOwner() {
+        return null;
     }
 }
