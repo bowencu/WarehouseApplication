@@ -6,6 +6,7 @@ public class Product {
     private String title;
     private double price;
     private boolean onSale;
+    private double salePrice;
     private Category category;
     private boolean used;
     private String description;
@@ -16,6 +17,7 @@ public class Product {
         this.title = title;
         this.price = price;
         onSale = false;
+        this.salePrice = -1.0;
         this.category = category;
         this.used = used;
         description = "";
@@ -26,6 +28,21 @@ public class Product {
     // EFFECTS: switches the product's ownership to the buyer
     public void switchOwner(Person buyer) {
         owner = buyer;
+    }
+
+    // REQUIRES: 0 < salePrice < price
+    // MODIFIES: this
+    // EFFECTS: mark a product as on sale by making onSale true and setting product's salePrice as salePrice
+    public void markSale(double salePrice) {
+        onSale = true;
+        this.salePrice = salePrice;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: remove the sale on a product by making onSale false and setting product's salePrice as -1.0
+    public void removeSale() {
+        onSale = false;
+        salePrice = -1.0;
     }
 
     // GETTERS
@@ -39,6 +56,10 @@ public class Product {
 
     public boolean isOnSale() {
         return onSale;
+    }
+
+    public double getSalePrice() {
+        return salePrice;
     }
 
     public Category getCategory() {

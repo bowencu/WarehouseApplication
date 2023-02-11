@@ -23,19 +23,32 @@ public class Warehouse {
 
     // REQUIRES: product is in warehouse inventory
     // MODIFIES: this, person, and product
-    // EFFECTS: adds product to person's inventory, removes product from warehouse inventory, deducts product price from
-    // person's balance, changes ownership of product from seller to buyer, and adds price amount to seller's balance
-    // return true if purchase is made, false otherwise
+    // EFFECTS: adds product to person's inventory, removes product from warehouse inventory, deducts appropriate
+    // product price from person's balance, changes ownership of product from seller to buyer, and adds appropriate
+    // price to seller's balance return true if purchase is made, false otherwise
     public boolean makeSale(Product product, Person buyer) {
-        if (product.getPrice() <= buyer.getBalance()) {
-            inventory.remove(product);
-            product.getOwner().loadBalance(product.getPrice());
-            product.switchOwner(buyer);
-            buyer.makePurchase(product);
-            buyer.addToInventory(product);
-            return true;
+        if (product.isOnSale()) {
+            if (product.getSalePrice() <= buyer.getBalance()) {
+                inventory.remove(product);
+                product.getOwner().loadBalance(product.getSalePrice());
+                product.switchOwner(buyer);
+                buyer.makeTransaction(product);
+                buyer.addToInventory(product);
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            if (product.getPrice() <= buyer.getBalance()) {
+                inventory.remove(product);
+                product.getOwner().loadBalance(product.getPrice());
+                product.switchOwner(buyer);
+                buyer.makeTransaction(product);
+                buyer.addToInventory(product);
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -91,5 +104,10 @@ public class Warehouse {
             }
         }
         return filteredInventory;
+    }
+
+    // GETTERS
+    public List<Product> getInventory() {
+        return inventory;
     }
 }

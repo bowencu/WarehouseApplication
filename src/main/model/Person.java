@@ -19,11 +19,20 @@ public class Person {
         inventory = new ArrayList<>();
     }
 
-    // REQUIRES: product price <= balance
     // MODIFIES: this
-    // EFFECTS: deducts product price from balance
-    public void makePurchase(Product product) {
-        balance -= product.getPrice();
+    // EFFECTS: deducts product sale price from balance if on sale, otherwise deduct price
+    public void makeTransaction(Product product) {
+        if (product.isOnSale()) {
+            balance -= product.getSalePrice();
+        } else {
+            balance -= product.getPrice();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds product to this person's cart
+    public void addToCart(Product product) {
+        cart.add(product);
     }
 
     // MODIFIES: this
@@ -32,9 +41,16 @@ public class Person {
         inventory.add(product);
     }
 
+    // REQUIRES: product is in this person's cart
+    // MODIFIES: this
+    // EFFECTS: removes product from person's cart
+    public void removeFromCart(Product product) {
+        cart.remove(product);
+    }
+
     // REQUIRES: product is in this person's inventory
     // MODIFIES: this
-    // EFFECTS: sells product from a person's inventory by removing it
+    // EFFECTS: removes product from person's inventory
     public void removeFromInventory(Product product) {
         inventory.remove(product);
     }
