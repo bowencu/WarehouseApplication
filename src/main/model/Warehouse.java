@@ -15,17 +15,18 @@ public class Warehouse {
 
     // REQUIRES: product is in person's inventory
     // MODIFIES: this and person
-    // EFFECTS: uploads product to warehouse of products for sale from person's inventory
+    // EFFECTS: uploads product to warehouse, removes product from owner's inventory, and make it used
     public void sell(Product product) {
         product.getOwner().removeFromInventory(product);
+        product.makeUsed();
         inventory.add(product);
     }
 
     // REQUIRES: product is in warehouse inventory
     // MODIFIES: this, person, and product
     // EFFECTS: adds product to person's inventory, removes product from warehouse inventory, deducts appropriate
-    // product price from person's balance, changes ownership of product from seller to buyer, and adds appropriate
-    // price to seller's balance return true if purchase is made, false otherwise
+    //          product price from person's balance, changes ownership of product from seller to buyer, and adds
+    //          appropriate price to seller's balance return true if purchase is made, false otherwise
     public boolean makeSale(Product product, Person buyer) {
         if (product.isOnSale()) {
             if (product.getSalePrice() <= buyer.getBalance()) {
@@ -52,23 +53,34 @@ public class Warehouse {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds product to warehouse inventory
+    public void addToInventory(Product product) {
+        inventory.add(product);
+    }
+
     // REQUIRES: low and high >= 0
     // EFFECTS: returns all products in inventory with price in range [low, high]
     public List<Product> filterWithinPriceRange(Double low, Double high) {
         List<Product> filteredInventory = new ArrayList<>();
         for (Product p : inventory) {
-            if (low <= p.getPrice() && p.getPrice() <= high) {
+            if (p.isOnSale()) {
+                if (low <= p.getSalePrice() && p.getSalePrice() <= high) {
+                    filteredInventory.add(p);
+                }
+            } else if (low <= p.getPrice() && p.getPrice() <= high) {
                 filteredInventory.add(p);
             }
         }
         return filteredInventory;
     }
 
-    // EFFECTS: returns all products in inventory currently on sale
-    public List<Product> filterForSale() {
+    // EFFECTS: returns all products in inventory currently on sale if true input
+    //          returns all products in inventory not on sale if false input
+    public List<Product> filterForSale(boolean wantSale) {
         List<Product> filteredInventory = new ArrayList<>();
         for (Product p : inventory) {
-            if (p.isOnSale()) {
+            if (p.isOnSale() == wantSale) {
                 filteredInventory.add(p);
             }
         }
@@ -87,7 +99,7 @@ public class Warehouse {
     }
 
     // EFFECTS: returns all used products in inventory if isUsed is true,
-    // otherwise return all unused products
+    //          otherwise return all unused products
     public List<Product> filterByUsed(boolean isUsed) {
         List<Product> filteredInventory = new ArrayList<>();
         if (isUsed) {

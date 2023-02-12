@@ -16,9 +16,9 @@ class PersonTest {
     @BeforeEach
     public void setup() {
         person = new Person("First customer!");
-        product1 = new Product("Truck", 50.0, Category.AUTOMOTIVE, false, person);
-        product2 = new Product("Kettle", 100.0, Category.APPLIANCES, true, person);
-        product3 = new Product("Jacket", 60.3, Category.CLOTHING, false, person);
+        product1 = new Product("Truck", 50.0, Category.AUTOMOTIVE, person);
+        product2 = new Product("Kettle", 100.0, Category.APPLIANCES, person);
+        product3 = new Product("Jacket", 60.3, Category.CLOTHING, person);
     }
 
     @Test

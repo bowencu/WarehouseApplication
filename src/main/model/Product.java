@@ -13,13 +13,13 @@ public class Product {
     private Person owner;
 
     // EFFECTS: constructs a new product listing for sale
-    public Product(String title, double price, Category category, boolean used, Person owner) {
+    public Product(String title, double price, Category category, Person owner) {
         this.title = title;
         this.price = price;
         onSale = false;
         this.salePrice = -1.0;
         this.category = category;
-        this.used = used;
+        used = false;
         description = "";
         this.owner = owner;
     }
@@ -43,6 +43,12 @@ public class Product {
     public void removeSale() {
         onSale = false;
         salePrice = -1.0;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: makes the product used
+    public void makeUsed() {
+        used = true;
     }
 
     // GETTERS
@@ -75,6 +81,6 @@ public class Product {
     }
 
     public Person getOwner() {
-        return null;
+        return owner;
     }
 }
