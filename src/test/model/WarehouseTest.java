@@ -238,6 +238,23 @@ public class WarehouseTest {
     }
 
     @Test
+    public void removeFromInventoryOnceTest() {
+        warehouse.addToInventory(product2);
+        warehouse.removeFromInventory(product2);
+        assertEquals(0, warehouse.getInventory().size());
+    }
+
+    @Test
+    public void removeFromInventoryMultipleTimesTest() {
+        warehouse.addToInventory(product1);
+        warehouse.addToInventory(product2);
+        warehouse.addToInventory(product3);
+        warehouse.removeFromInventory(product2);
+        warehouse.removeFromInventory(product1);
+        assertEquals(1, warehouse.getInventory().size());
+    }
+
+    @Test
     public void filterWithinPriceRangeTest() {
         setupForFilteringMethods();
         assertEquals(3, warehouse.filterWithinPriceRange(50.0, 90.0).size());

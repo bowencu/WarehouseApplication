@@ -25,7 +25,6 @@ class PersonTest {
     public void constructorTest() {
         assertEquals("First customer!", person.getName());
         assertEquals(0, person.getBalance());
-        assertEquals(new ArrayList<>(), person.getCart());
         assertEquals(new ArrayList<>(), person.getInventory());
     }
 
@@ -45,22 +44,6 @@ class PersonTest {
     }
 
     @Test
-    public void addToCartOneItemTest() {
-        person.addToCart(product1);
-        assertEquals(1, person.getCart().size());
-        assertEquals(product1, person.getCart().get(0));
-    }
-
-    @Test
-    public void addToCartMultipleItemsTest() {
-        person.addToCart(product1);
-        person.addToCart(product2);
-        assertEquals(2, person.getCart().size());
-        assertEquals(product1, person.getCart().get(0));
-        assertEquals(product2, person.getCart().get(1));
-    }
-
-    @Test
     public void addToInventoryOneItemTest() {
         person.addToInventory(product1);
         assertEquals(1, person.getInventory().size());
@@ -74,27 +57,6 @@ class PersonTest {
         assertEquals(2, person.getInventory().size());
         assertEquals(product1, person.getInventory().get(0));
         assertEquals(product2, person.getInventory().get(1));
-    }
-
-    @Test
-    public void removeFromCartOneItemTest() {
-        person.addToCart(product2);
-        person.addToCart(product1);
-        person.removeFromCart(product2);
-        assertEquals(1, person.getCart().size());
-    }
-
-    @Test
-    public void removeFromCartMultipleItemsTest() {
-        person.addToCart(product1);
-        person.addToCart(product2);
-        person.addToCart(product3);
-        person.removeFromCart(product2);
-        assertEquals(2, person.getCart().size());
-        person.removeFromCart(product3);
-        assertEquals(1, person.getCart().size());
-        person.removeFromCart(product1);
-        assertEquals(0, person.getCart().size());
     }
 
     @Test

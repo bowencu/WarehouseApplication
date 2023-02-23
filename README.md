@@ -13,11 +13,11 @@ as online marketplaces are increasingly common. The process of finding the right
 customer by implementing ways for one to express their criteria through their browsing experience.
 
 **As a user, I want to be able to:**
-- sell products by uploading product details to the database
+- sell products by uploading products and their attributes to the warehouse inventory
 - earn the amount paid by a buyer as a seller
 - include details on a products for sale *(name, price, sale, category, used condition, description, stock left, etc.)*
 - view all products currently for sale
-- filter and sort products according to their features *(name, price, sale, category, used condition, description, etc.)*
+- filter products according to their features *(name, price, sale, category, used condition, description, etc.)*
 - buy products and add them to my personal inventory
 - have an account that stores my remaining balance for purchases on this application
 - apply discounts to all currently listed products during promotional events, or only to products that fit a specified 

@@ -70,8 +70,23 @@ public class ProductTest {
     }
 
     @Test
+    public void changePriceTest() {
+        product.changePrice(60.0);
+        assertEquals(60.0, product.getPrice());
+        product.changePrice(75.6);
+        assertEquals(75.6, product.getPrice());
+    }
+
+    @Test
     public void makeUsedTest() {
         product.makeUsed();
         assertTrue(product.isUsed());
+    }
+
+    @Test
+    public void getActualPriceTest() {
+        assertEquals(50.0, product.getActualPrice());
+        product.markSale(45.2);
+        assertEquals(45.2, product.getActualPrice());
     }
 }

@@ -28,28 +28,15 @@ public class Warehouse {
     //          product price from person's balance, changes ownership of product from seller to buyer, and adds
     //          appropriate price to seller's balance return true if purchase is made, false otherwise
     public boolean makeSale(Product product, Person buyer) {
-        if (product.isOnSale()) {
-            if (product.getSalePrice() <= buyer.getBalance()) {
-                inventory.remove(product);
-                product.getOwner().loadBalance(product.getSalePrice());
-                product.switchOwner(buyer);
-                buyer.makeTransaction(product);
-                buyer.addToInventory(product);
-                return true;
-            } else {
-                return false;
-            }
+        if (product.getActualPrice() <= buyer.getBalance()) {
+            inventory.remove(product);
+            product.getOwner().loadBalance(product.getActualPrice());
+            product.switchOwner(buyer);
+            buyer.makeTransaction(product);
+            buyer.addToInventory(product);
+            return true;
         } else {
-            if (product.getPrice() <= buyer.getBalance()) {
-                inventory.remove(product);
-                product.getOwner().loadBalance(product.getPrice());
-                product.switchOwner(buyer);
-                buyer.makeTransaction(product);
-                buyer.addToInventory(product);
-                return true;
-            } else {
-                return false;
-            }
+            return false;
         }
     }
 
@@ -57,6 +44,13 @@ public class Warehouse {
     // EFFECTS: adds product to warehouse inventory
     public void addToInventory(Product product) {
         inventory.add(product);
+    }
+
+    // REQUIRES: product is in warehouse inventory
+    // MODIFIES: this
+    // EFFECTS: removes product from warehouse inventory
+    public void removeFromInventory(Product product) {
+        inventory.remove(product);
     }
 
     // REQUIRES: low and high >= 0
@@ -91,7 +85,7 @@ public class Warehouse {
     public List<Product> filterByCategory(Category category) {
         List<Product> filteredInventory = new ArrayList<>();
         for (Product p : inventory) {
-            if (p.getCategory() == category) {
+            if (p.getCategory().equals(category)) {
                 filteredInventory.add(p);
             }
         }

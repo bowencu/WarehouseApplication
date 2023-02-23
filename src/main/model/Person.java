@@ -8,14 +8,12 @@ import java.util.List;
 public class Person {
     private String name;
     private double balance;
-    private List<Product> cart;
     private List<Product> inventory;
 
     // EFFECTS: constructs a shopping user with a name, no account balance, an empty cart, and empty inventory
     public Person(String name) {
         this.name = name;
         balance = 0;
-        cart = new ArrayList<>();
         inventory = new ArrayList<>();
     }
 
@@ -30,22 +28,9 @@ public class Person {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds product to this person's cart
-    public void addToCart(Product product) {
-        cart.add(product);
-    }
-
-    // MODIFIES: this
     // EFFECTS: adds product to this person's inventory
     public void addToInventory(Product product) {
         inventory.add(product);
-    }
-
-    // REQUIRES: product is in this person's cart
-    // MODIFIES: this
-    // EFFECTS: removes product from person's cart
-    public void removeFromCart(Product product) {
-        cart.remove(product);
     }
 
     // REQUIRES: product is in this person's inventory
@@ -62,7 +47,6 @@ public class Person {
         balance += amount;
     }
 
-
     // GETTERS
     public String getName() {
         return name;
@@ -70,10 +54,6 @@ public class Person {
 
     public double getBalance() {
         return balance;
-    }
-
-    public List<Product> getCart() {
-        return cart;
     }
 
     public List<Product> getInventory() {

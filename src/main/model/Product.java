@@ -45,10 +45,23 @@ public class Product {
         salePrice = -1.0;
     }
 
+    public void changePrice(Double newPrice) {
+        price = newPrice;
+    }
+
     // MODIFIES: this
     // EFFECTS: makes the product used
     public void makeUsed() {
         used = true;
+    }
+
+    // EFFECTS: returns the actual sale price of product, depending on if it's on sale
+    public double getActualPrice() {
+        if (isOnSale()) {
+            return salePrice;
+        } else {
+            return price;
+        }
     }
 
     // GETTERS
@@ -83,4 +96,5 @@ public class Product {
     public Person getOwner() {
         return owner;
     }
+
 }
