@@ -18,13 +18,9 @@ public class Person {
     }
 
     // MODIFIES: this
-    // EFFECTS: deducts product sale price from balance if on sale, otherwise deduct price
+    // EFFECTS: deducts actual product price from balance
     public void makeTransaction(Product product) {
-        if (product.isOnSale()) {
-            balance -= product.getSalePrice();
-        } else {
-            balance -= product.getPrice();
-        }
+        balance -= product.getActualPrice();
     }
 
     // MODIFIES: this

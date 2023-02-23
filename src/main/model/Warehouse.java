@@ -58,11 +58,7 @@ public class Warehouse {
     public List<Product> filterWithinPriceRange(Double low, Double high) {
         List<Product> filteredInventory = new ArrayList<>();
         for (Product p : inventory) {
-            if (p.isOnSale()) {
-                if (low <= p.getSalePrice() && p.getSalePrice() <= high) {
-                    filteredInventory.add(p);
-                }
-            } else if (low <= p.getPrice() && p.getPrice() <= high) {
+            if (low <= p.getActualPrice() && p.getActualPrice() <= high) {
                 filteredInventory.add(p);
             }
         }
@@ -96,17 +92,9 @@ public class Warehouse {
     //          otherwise return all unused products
     public List<Product> filterByUsed(boolean isUsed) {
         List<Product> filteredInventory = new ArrayList<>();
-        if (isUsed) {
-            for (Product p : inventory) {
-                if (p.isUsed()) {
-                    filteredInventory.add(p);
-                }
-            }
-        } else {
-            for (Product p : inventory) {
-                if (!p.isUsed()) {
-                    filteredInventory.add(p);
-                }
+        for (Product p : inventory) {
+            if (p.isUsed() == isUsed) {
+                filteredInventory.add(p);
             }
         }
         return filteredInventory;
