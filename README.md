@@ -23,3 +23,5 @@ customer by implementing ways for one to express their criteria through their br
 - apply discounts to all currently listed products during promotional events, or only to products that fit a specified 
   criteria
 - manage stock for each product in a warehouse
+- save the entire state of the warehouse inventory and individual shopper information (balances, inventories)
+- reload a previously saved state of warehouse to continue shopping with the same inventory and shopper information

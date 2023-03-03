@@ -211,7 +211,7 @@ public class WarehouseApp {
         System.out.println("\tb    -> log out of my user account");
     }
 
-    // EFFECTS: amount is > 0.0
+    // REQUIRES: amount is > 0.0
     // MODIFIES: this
     // EFFECTS: loads amount to user's balance
     private void userLoad(Person user) {
