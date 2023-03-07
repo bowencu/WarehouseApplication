@@ -2,14 +2,17 @@ package model;
 
 // Represents a product for sale with attributes.
 
-public class Product {
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
+public class Product implements Writable {
     private String title;
     private double price;
     private boolean onSale;
     private double salePrice;
     private Category category;
     private boolean used;
-    private String description;
     private Person owner;
 
     // EFFECTS: constructs a new product listing for sale
@@ -20,7 +23,6 @@ public class Product {
         this.salePrice = -1.0;
         this.category = category;
         used = false;
-        description = "";
         this.owner = owner;
     }
 
@@ -64,6 +66,19 @@ public class Product {
         }
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Title", title);
+        json.put("Price", price);
+        json.put("On Sale?", onSale);
+        json.put("Sale Price", salePrice);
+        json.put("Category", category);
+        json.put("Used?", used);
+        json.put("Owner", owner.getName());
+        return json;
+    }
+
     // GETTERS
     public String getTitle() {
         return title;
@@ -87,10 +102,6 @@ public class Product {
 
     public boolean isUsed() {
         return used;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public Person getOwner() {

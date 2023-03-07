@@ -32,13 +32,12 @@ public class WarehouseTest {
         warehouse.addToInventory(product1);
         warehouse.addToInventory(product2);
         warehouse.addToInventory(product3);
-
     }
 
     @Test
     public void constructorTest() {
         assertEquals(0, warehouse.getInventory().size());
-        assertEquals(new ArrayList<>(), warehouse.getInventory());
+        assertEquals(0, warehouse.getUsers().size());
     }
 
     @Test
@@ -78,6 +77,8 @@ public class WarehouseTest {
 
     @Test
     public void makeSaleOnceSucceedOnSaleTest() {
+        warehouse.addToUsers(owner);
+        warehouse.addToUsers(buyer);
         product1 = new Product("Truck", 50.0, Category.AUTOMOTIVE, owner);
         product1.markSale(40.0);
         warehouse.addToInventory(product1);
@@ -92,6 +93,8 @@ public class WarehouseTest {
 
     @Test
     public void makeSaleOnceSucceedOnSaleBoundaryTest() {
+        warehouse.addToUsers(owner);
+        warehouse.addToUsers(buyer);
         product1 = new Product("Truck", 50.0, Category.AUTOMOTIVE, owner);
         product1.markSale(40.0);
         warehouse.addToInventory(product1);
@@ -106,6 +109,8 @@ public class WarehouseTest {
 
     @Test
     public void makeSaleOnceSucceedNotOnSaleTest() {
+        warehouse.addToUsers(owner);
+        warehouse.addToUsers(buyer);
         product1 = new Product("Truck", 50.0, Category.AUTOMOTIVE, owner);
         warehouse.addToInventory(product1);
         buyer.loadBalance(50.5);
@@ -119,6 +124,8 @@ public class WarehouseTest {
 
     @Test
     public void makeSaleOnceSucceedNotOnSaleBoundaryTest() {
+        warehouse.addToUsers(owner);
+        warehouse.addToUsers(buyer);
         product1 = new Product("Truck", 50.0, Category.AUTOMOTIVE, owner);
         warehouse.addToInventory(product1);
         buyer.loadBalance(50.0);
@@ -159,6 +166,8 @@ public class WarehouseTest {
 
     @Test
     public void makeSaleMultipleTimesAllSucceedTest() {
+        warehouse.addToUsers(owner);
+        warehouse.addToUsers(buyer);
         product1 = new Product("Truck", 50.0, Category.AUTOMOTIVE, owner);
         product2 = new Product("Kettle", 100.0, Category.APPLIANCES, owner);
         product3 = new Product("Jacket", 60.3, Category.CLOTHING, owner);
@@ -181,6 +190,8 @@ public class WarehouseTest {
 
     @Test
     public void makeSaleMultipleTimesOneFailedTest() {
+        warehouse.addToUsers(owner);
+        warehouse.addToUsers(buyer);
         product1 = new Product("Truck", 50.0, Category.AUTOMOTIVE, owner);
         product2 = new Product("Kettle", 100.0, Category.APPLIANCES, owner);
         product3 = new Product("Jacket", 60.3, Category.CLOTHING, owner);
@@ -224,34 +235,51 @@ public class WarehouseTest {
     }
 
     @Test
-    public void addToInventoryOnceTest() {
+    public void addToInventoryTest() {
         warehouse.addToInventory(product1);
         assertEquals(1, warehouse.getInventory().size());
-    }
 
-    @Test
-    public void addToInventoryMultipleTimesTest() {
         warehouse.addToInventory(product1);
         warehouse.addToInventory(product2);
         warehouse.addToInventory(product3);
-        assertEquals(3, warehouse.getInventory().size());
+        assertEquals(4, warehouse.getInventory().size());
     }
 
     @Test
-    public void removeFromInventoryOnceTest() {
+    public void removeFromInventoryTest() {
         warehouse.addToInventory(product2);
         warehouse.removeFromInventory(product2);
         assertEquals(0, warehouse.getInventory().size());
-    }
 
-    @Test
-    public void removeFromInventoryMultipleTimesTest() {
         warehouse.addToInventory(product1);
         warehouse.addToInventory(product2);
         warehouse.addToInventory(product3);
         warehouse.removeFromInventory(product2);
         warehouse.removeFromInventory(product1);
         assertEquals(1, warehouse.getInventory().size());
+    }
+
+    @Test
+    public void addToUsersTest() {
+        warehouse.addToUsers(owner);
+        assertEquals(1, warehouse.getUsers().size());
+
+        warehouse.addToUsers(owner);
+        warehouse.addToUsers(buyer);
+        assertEquals(3, warehouse.getUsers().size());
+    }
+
+    @Test
+    public void removeFromUsersTest() {
+        warehouse.addToUsers(buyer);
+        warehouse.removeFromUsers(buyer);
+        assertEquals(0, warehouse.getUsers().size());
+
+        warehouse.addToUsers(owner);
+        warehouse.addToUsers(buyer);
+        warehouse.removeFromUsers(buyer);
+        warehouse.removeFromUsers(owner);
+        assertEquals(0, warehouse.getUsers().size());
     }
 
     @Test
@@ -328,5 +356,20 @@ public class WarehouseTest {
         product2.makeUsed();
         product3.makeUsed();
         assertEquals(0, warehouse.filterByUsed(false).size());
+    }
+
+    @Test
+    public void toJsonTest() {
+        setup();
+        setupForFilteringMethods();
+        warehouse.addToUsers(owner);
+        warehouse.addToUsers(buyer);
+        assertEquals("{\"All Users\":[{\"Balance\":0,\"Name\":\"Owner!\",\"Personal Inventory\":[]}," +
+                "{\"Balance\":0,\"Name\":\"Buyer!!\",\"Personal Inventory\":[]}],\"Warehouse Inventory\":[{\"Used?\":" +
+                "true,\"Owner\":\"Owner!\",\"On Sale?\":false,\"Category\":\"AUTOMOTIVE\",\"Price\":50,\"Title\":" +
+                "\"Truck\",\"Sale Price\":-1},{\"Used?\":false,\"Owner\":\"Owner!\",\"On Sale?\":true,\"Category\":" +
+                "\"APPLIANCES\",\"Price\":100,\"Title\":\"Kettle\",\"Sale Price\":90},{\"Used?\":false,\"Owner\":" +
+                "\"Owner!\",\"On Sale?\":false,\"Category\":\"CLOTHING\",\"Price\":60.3,\"Title\":\"Jacket\"," +
+                "\"Sale Price\":-1}]}", warehouse.toJson().toString());
     }
 }

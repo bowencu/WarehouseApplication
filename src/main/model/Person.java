@@ -2,10 +2,15 @@ package model;
 
 // Represents a shopper with a name, remaining balance, cart of unpaid products, and products purchased.
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.JsonReader;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person {
+public class Person implements Writable {
     private String name;
     private double balance;
     private List<Product> inventory;
@@ -41,6 +46,24 @@ public class Person {
     // EFFECTS: adds amount to current balance
     public void loadBalance(Double amount) {
         balance += amount;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Name", name);
+        json.put("Balance", balance);
+        json.put("Personal Inventory", productsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns products in inventory as JSONArray
+    private JSONArray productsToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Product p : inventory) {
+            jsonArray.put(p.toJson());
+        }
+        return jsonArray;
     }
 
     // GETTERS

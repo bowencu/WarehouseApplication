@@ -25,7 +25,6 @@ public class ProductTest {
         assertEquals(-1.0, product.getSalePrice());
         assertEquals(Category.AUTOMOTIVE, product.getCategory());
         assertFalse(product.isUsed());
-        assertEquals("", product.getDescription());
         assertEquals(owner, product.getOwner());
     }
 
@@ -88,5 +87,11 @@ public class ProductTest {
         assertEquals(50.0, product.getActualPrice());
         product.markSale(45.2);
         assertEquals(45.2, product.getActualPrice());
+    }
+
+    @Test
+    public void toJsonTest() {
+        assertEquals("{\"Used?\":false,\"Owner\":\"Owner!\",\"On Sale?\":false,\"Category\":\"AUTOMOTIVE\"," +
+                "\"Price\":50,\"Title\":\"Truck\",\"Sale Price\":-1}", product.toJson().toString());
     }
 }

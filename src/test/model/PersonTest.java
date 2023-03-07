@@ -94,4 +94,12 @@ class PersonTest {
         assertEquals(0.01 + 29.0 + 45.23, person.getBalance());
     }
 
+    @Test
+    public void toJsonTest() {
+        person.addToInventory(product1);
+        assertEquals("{\"Balance\":0,\"Name\":\"First customer!\",\"Personal Inventory\":[{\"Used?\":false," +
+                "\"Owner\":\"First customer!\",\"On Sale?\":false,\"Category\":\"AUTOMOTIVE\",\"Price\":50," +
+                "\"Title\":\"Truck\",\"Sale Price\":-1}]}", person.toJson().toString());
+    }
+
 }

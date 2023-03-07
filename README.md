@@ -25,3 +25,6 @@ customer by implementing ways for one to express their criteria through their br
 - manage stock for each product in a warehouse
 - save the entire state of the warehouse inventory and individual shopper information (balances, inventories)
 - reload a previously saved state of warehouse to continue shopping with the same inventory and shopper information
+
+Source for code in the model and test persistence packages:
+https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git

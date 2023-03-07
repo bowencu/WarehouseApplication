@@ -1,22 +1,29 @@
 package ui;
 
-import model.*;
+import model.Category;
+import model.Person;
+import model.Product;
+import model.Warehouse;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class WarehouseApp {
     // Warehouse marketplace application
+    private static final String JSON_STORE = "./data/warehouse.json";
+
     private Warehouse warehouse;
-    private List<Person> users;
     private Person boss;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: runs the warehouse application
-    public WarehouseApp() {
+    public WarehouseApp() throws FileNotFoundException {
         init();
-
         runWarehouse();
     }
 
@@ -25,10 +32,14 @@ public class WarehouseApp {
     private void runWarehouse() {
         boolean keepGoing = true;
         String command;
+        input = new Scanner(System.in);
+        input.useDelimiter("\n");
 
         System.out.println("l -> Login");
         System.out.println("n -> New User");
         System.out.println("m -> Store Manager");
+        System.out.println("save -> save warehouse to file");
+        System.out.println("open -> load warehouse from file");
         System.out.println("q -> quit");
 
         while (keepGoing) {
@@ -47,8 +58,8 @@ public class WarehouseApp {
     // EFFECTS: initializes warehouse with 3 initial products and no owner yet, and an empty list of users
     private void init() {
         warehouse = new Warehouse();
-        users = new ArrayList<>();
         boss = new Person("Store Owner");
+        warehouse.addToUsers(boss);
         Product toaster = new Product("Toaster", 39.98, Category.APPLIANCES, boss);
         Product bus = new Product("School Bus", 50001, Category.AUTOMOTIVE, boss);
         Product sweater = new Product("UBC Sweater", 49.99, Category.CLOTHING, boss);
@@ -57,6 +68,8 @@ public class WarehouseApp {
         warehouse.addToInventory(sweater);
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     // REQUIRES: no duplicates of users in users with the same name
@@ -70,9 +83,36 @@ public class WarehouseApp {
             runWarehouse();
         } else if (command.equals("n")) {
             userNew();
+        } else if (command.equals("save")) {
+            saveWarehouse();
+        } else if (command.equals("open")) {
+            openWarehouse();
         } else {
             System.out.println("Selection not valid...");
             runWarehouse();
+        }
+    }
+
+    // EFFECTS: saves the warehouse to file
+    private void saveWarehouse() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(warehouse);
+            jsonWriter.close();
+            System.out.println("Saved Warehouse to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads warehouse from file
+    private void openWarehouse() {
+        try {
+            warehouse = jsonReader.read();
+            System.out.println("Loaded Warehouse from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 
@@ -81,7 +121,7 @@ public class WarehouseApp {
     private void userLogin() {
         System.out.println("Enter your name:");
         String name = input.next();
-        for (Person p : users) {
+        for (Person p : warehouse.getUsers()) {
             if (name.equals(p.getName())) {
                 System.out.println("Welcome back " + p.getName() + "!");
                 startVisit(p);
@@ -172,7 +212,7 @@ public class WarehouseApp {
         System.out.println("Enter your new name:");
         String name = input.next();
         Person user = new Person(name);
-        users.add(user);
+        warehouse.addToUsers(user);
         System.out.println("Welcome to Warehouse, " + user.getName() + "!");
         startVisit(user);
     }
@@ -251,7 +291,7 @@ public class WarehouseApp {
     // EFFECTS: prints out user's inventory of products
     private void userView(Person user) {
         for (Product p : user.getInventory()) {
-            System.out.println(p.getTitle() + " -- " + p.getDescription());
+            System.out.println(p.getTitle());
         }
         System.out.println("You have " + user.getInventory().size() + " item(s) in your inventory.");
         startVisit(user);
@@ -279,7 +319,10 @@ public class WarehouseApp {
     // MODIFIES: this and user
     // EFFECTS: provides viewing and buying options of products
     private void buyProducts(Person user, String filterBy) {
-        if (filterBy.equals("range")) {
+        if (filterBy.equals("all")) {
+            System.out.println("All products:");
+            printAllProducts();
+        } else if (filterBy.equals("range")) {
             printPriceRangeProducts();
         } else if (filterBy.equals("sale")) {
             printSaleProducts();
@@ -314,7 +357,6 @@ public class WarehouseApp {
     private void printAllProducts() {
         for (Product p : warehouse.getInventory()) {
             System.out.println(p.getTitle() + " -$" + p.getActualPrice() + "- ");
-            System.out.println(p.getDescription() + "\n");
         }
     }
 
@@ -325,7 +367,6 @@ public class WarehouseApp {
         double max = input.nextDouble();
         for (Product p : warehouse.filterWithinPriceRange(min, max)) {
             System.out.println(p.getTitle() + " -$" + p.getActualPrice() + "- ");
-            System.out.println(p.getDescription() + "\n");
         }
     }
 
@@ -333,7 +374,6 @@ public class WarehouseApp {
         System.out.println("Do you want to view products on sale? (Enter 'true' or 'false')");
         for (Product p : warehouse.filterForSale(Boolean.parseBoolean(input.next()))) {
             System.out.println(p.getTitle() + " -$" + p.getActualPrice() + "- ");
-            System.out.println(p.getDescription() + "\n");
         }
     }
 
@@ -347,7 +387,6 @@ public class WarehouseApp {
         String category = input.next().toUpperCase();
         for (Product p : warehouse.filterByCategory(Category.valueOf(category))) {
             System.out.println(p.getTitle() + " -$" + p.getActualPrice() + "- ");
-            System.out.println(p.getDescription() + "\n");
         }
     }
 
@@ -355,7 +394,6 @@ public class WarehouseApp {
         System.out.println("Do you want to view products that are used? (Enter 'true' or 'false')");
         for (Product p : warehouse.filterByUsed(Boolean.parseBoolean(input.next()))) {
             System.out.println(p.getTitle() + " -$" + p.getActualPrice() + "- ");
-            System.out.println(p.getDescription() + "\n");
         }
     }
 
