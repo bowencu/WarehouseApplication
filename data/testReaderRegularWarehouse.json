@@ -5,13 +5,13 @@
         "Name": "Store Owner",
         "Personal Inventory": [
           {
-            "Used?": true,
-            "Owner": "Bowen",
-            "On Sale?": true,
+            "Used?": false,
+            "Owner": "Store Owner",
+            "On Sale?": false,
             "Category": "ELECTRONICS",
             "Price": 999.99,
             "Title": "iPad Pro",
-            "Sale Price": 899.99
+            "Sale Price": -1
           }
         ]
       },
@@ -21,7 +21,7 @@
         "Personal Inventory": [
           {
             "Used?": true,
-            "Owner": "Store Owner",
+            "Owner": "Bowen",
             "On Sale?": true,
             "Category": "ELECTRONICS",
             "Price": 999.99,

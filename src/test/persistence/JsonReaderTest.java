@@ -41,12 +41,18 @@ public class JsonReaderTest extends JsonTest {
         try {
             Warehouse warehouse = reader.read();
             assertEquals(2, warehouse.getUsers().size());
-            Person person = warehouse.getUsers().get(1);
-            checkPerson(1000.0, "Bowen", 1, person);
 
-            Product item = person.getInventory().get(0);
+            Person person1 = warehouse.getUsers().get(0);
+            checkPerson(0.0, "Store Owner", 1, person1);
+            Product item1 = person1.getInventory().get(0);
+            checkProduct(false, "Store Owner", false, Category.ELECTRONICS, 999.99,
+                    "iPad Pro", -1, item1);
+            
+            Person person2 = warehouse.getUsers().get(1);
+            checkPerson(1000.0, "Bowen", 1, person2);
+            Product item2 = person2.getInventory().get(0);
             checkProduct(true, "Bowen", true, Category.ELECTRONICS, 999.99,
-                    "iPad Pro", 899.99, item);
+                    "iPad Pro", 899.99, item2);
 
             Product product1 = warehouse.getInventory().get(0);
             Product product3 = warehouse.getInventory().get(2);
