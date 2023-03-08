@@ -1,0 +1,51 @@
+{
+    "All Users": [
+        {
+            "Balance": 0,
+            "Name": "Store Owner",
+            "Personal Inventory": []
+        },
+        {
+            "Balance": 1000,
+            "Name": "Bowen",
+            "Personal Inventory": [{
+                "Used?": true,
+                "Owner": "Bowen",
+                "On Sale?": true,
+                "Category": "ELECTRONICS",
+                "Price": 999.99,
+                "Title": "iPad Pro",
+                "Sale Price": 899.99
+            }]
+        }
+    ],
+    "Warehouse Inventory": [
+        {
+            "Used?": false,
+            "Owner": "Store Owner",
+            "On Sale?": false,
+            "Category": "APPLIANCES",
+            "Price": 39.98,
+            "Title": "Toaster",
+            "Sale Price": -1
+        },
+        {
+            "Used?": false,
+            "Owner": "Store Owner",
+            "On Sale?": false,
+            "Category": "AUTOMOTIVE",
+            "Price": 50001,
+            "Title": "School Bus",
+            "Sale Price": -1
+        },
+        {
+            "Used?": true,
+            "Owner": "Store Owner",
+            "On Sale?": true,
+            "Category": "CLOTHING",
+            "Price": 49.99,
+            "Title": "UBC Sweater",
+            "Sale Price": 39.99
+        }
+    ]
+}

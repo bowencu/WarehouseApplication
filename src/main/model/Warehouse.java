@@ -36,18 +36,10 @@ public class Warehouse implements Writable {
     public boolean makeSale(Product product, Person buyer) {
         if (product.getActualPrice() <= buyer.getBalance()) {
             inventory.remove(product);
-            for (Person p : users) {
-                if (p.equals(product.getOwner())) {
-                    p.loadBalance(product.getActualPrice());
-                }
-            }
+            product.getOwner().loadBalance(product.getActualPrice());
+            buyer.makeTransaction(product);
+            buyer.addToInventory(product);
             product.switchOwner(buyer);
-            for (Person p : users) {
-                if (p.equals(buyer)) {
-                    buyer.makeTransaction(product);
-                    buyer.addToInventory(product);
-                }
-            }
             return true;
         } else {
             return false;

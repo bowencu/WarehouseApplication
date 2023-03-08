@@ -45,7 +45,7 @@ public class JsonReaderTest extends JsonTest {
             checkPerson(1000.0, "Bowen", 1, person);
 
             Product item = person.getInventory().get(0);
-            checkProduct(true, "Store Owner", true, Category.ELECTRONICS, 999.99,
+            checkProduct(true, "Bowen", true, Category.ELECTRONICS, 999.99,
                     "iPad Pro", 899.99, item);
 
             Product product1 = warehouse.getInventory().get(0);

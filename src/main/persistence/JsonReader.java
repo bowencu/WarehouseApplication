@@ -127,14 +127,7 @@ public class JsonReader {
         double salePrice = jsonObject.getDouble("Sale Price");
         Category category = Category.valueOf(jsonObject.getString("Category"));
         boolean used = jsonObject.getBoolean("Used?");
-        String owner = jsonObject.getString("Owner");
-        Person ownerPerson = null;
-        for (Person p : warehouse.getUsers()) {
-            if (p.getName().equals(owner)) {
-                ownerPerson = p;
-            }
-        }
-        Product product = new Product(title, price, category, ownerPerson);
+        Product product = new Product(title, price, category, user);
         if (onSale) {
             product.markSale(salePrice);
         }

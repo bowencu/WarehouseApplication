@@ -49,12 +49,11 @@ public class JsonWriterTest extends JsonTest {
             Person person1 = new Person("Store Owner");
             warehouse.addToUsers(person1);
 
-            Product product = new Product("iPad Pro", 999.99, Category.ELECTRONICS, person1);
-            product.makeUsed();
-            product.markSale(899.99);
-
             Person person2 = new Person("Bowen");
             person2.loadBalance(1000.0);
+            Product product = new Product("iPad Pro", 999.99, Category.ELECTRONICS, person2);
+            product.makeUsed();
+            product.markSale(899.99);
             person2.addToInventory(product);
             warehouse.addToUsers(person2);
 
@@ -81,7 +80,7 @@ public class JsonWriterTest extends JsonTest {
             checkPerson(0, "Store Owner", 0, person1);
             checkPerson(1000, "Bowen", 1, person2);
             product = person2.getInventory().get(0);
-            checkProduct(true, "Store Owner", true, Category.ELECTRONICS, 999.99,
+            checkProduct(true, "Bowen", true, Category.ELECTRONICS, 999.99,
                     "iPad Pro", 899.99, product);
             product1 = warehouse.getInventory().get(0);
             product2 = warehouse.getInventory().get(1);

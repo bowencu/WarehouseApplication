@@ -338,6 +338,8 @@ public class WarehouseApp {
         makePurchase(user);
     }
 
+    // REQUIRES: productName is in warehouse inventory
+    // MODIFIES: this
     // EFFECTS: allows user to make a purchase from warehouse after viewing products
     private void makePurchase(Person user) {
         System.out.println("Enter product name you would like to purchase:");
