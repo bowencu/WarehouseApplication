@@ -1,44 +1,4 @@
 {
-    "All Users": [
-        {
-            "Balance": 89.97,
-            "Name": "Store Owner",
-            "Personal Inventory": []
-        },
-        {
-            "Balance": 11.030000000000001,
-            "Name": "Bowen",
-            "Personal Inventory": [{
-                "Used?": false,
-                "Owner": "Bowen",
-                "On Sale?": false,
-                "Category": "CLOTHING",
-                "Price": 49.99,
-                "Title": "UBC Sweater",
-                "Sale Price": -1
-            }]
-        },
-        {
-            "Balance": 0,
-            "Name": "Ethan",
-            "Personal Inventory": [{
-                "Used?": true,
-                "Owner": "Ethan",
-                "On Sale?": false,
-                "Category": "APPLIANCES",
-                "Price": 1,
-                "Title": "Toaster",
-                "Sale Price": -1
-            }]
-        }
-    ],
-    "Warehouse Inventory": [{
-        "Used?": false,
-        "Owner": "Store Owner",
-        "On Sale?": false,
-        "Category": "AUTOMOTIVE",
-        "Price": 50001,
-        "Title": "School Bus",
-        "Sale Price": -1
-    }]
+    "All Users": [],
+    "Warehouse Inventory": []
 }
