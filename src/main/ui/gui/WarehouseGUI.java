@@ -1,8 +1,6 @@
 package ui.gui;
 
-import model.Category;
 import model.Person;
-import model.Product;
 import model.Warehouse;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -19,6 +17,7 @@ public class WarehouseGUI extends JFrame implements ActionListener {
     private static final String JSON_STORE = "./data/warehouse.json";
 
     private Warehouse warehouse = new Warehouse();
+    private Person boss = new Person("Store Owner");
     private JFrame frame = new JFrame("Warehouse");
     private JPanel panel;
     private JLabel label1;
@@ -30,7 +29,8 @@ public class WarehouseGUI extends JFrame implements ActionListener {
     private JLabel label7;
     private JLabel label8;
     private JLabel label9;
-    private JTextField textField;
+    private JTextField textField1;
+    private JTextField textField2;
     private JButton button;
     private JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
     private JsonReader jsonReader = new JsonReader(JSON_STORE);
@@ -43,6 +43,7 @@ public class WarehouseGUI extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: runs the Warehouse application for GUI
     public WarehouseGUI() {
+        warehouse.addToUsers(boss);
         panel = new JPanel();
         frame.setSize(1000, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,17 +88,18 @@ public class WarehouseGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("newUser")) {
-            Person newUser = new Person(textField.getText());
+            Person newUser = new Person(textField1.getText());
             warehouse.addToUsers(newUser);
-            new Shopper(warehouse, newUser);
+            new User(warehouse, newUser);
         } else if (e.getActionCommand().equals("login")) {
             for (Person user : warehouse.getUsers()) {
-                if (user.getName().equals(textField.getText())) {
-                    new Shopper(warehouse, user);
+                if (user.getName().equals(textField2.getText())) {
+                    new User(warehouse, user);
                 }
             }
             label1.setText("Given user name not found");
             label1.setBounds(100, 600, 400, 25);
+            tempLabel(label1);
         } else if (e.getActionCommand().equals("storeManager")) {
             new StoreManager(warehouse);
         } else if (e.getActionCommand().equals("save")) {
@@ -114,9 +116,9 @@ public class WarehouseGUI extends JFrame implements ActionListener {
         label2.setBounds(335, 100, 150, 25);
         label8.setText("Name:");
         label8.setBounds(300, 150, 80, 25);
-        textField = new JTextField();
-        textField.setBounds(380, 150, 165, 25);
-        panel.add(textField);
+        textField1 = new JTextField();
+        textField1.setBounds(380, 150, 165, 25);
+        panel.add(textField1);
         button = new JButton("Create New User");
         button.setBounds(335, 200, 150, 25);
         button.setActionCommand("newUser");
@@ -131,9 +133,9 @@ public class WarehouseGUI extends JFrame implements ActionListener {
         label3.setBounds(335, 400, 150, 25);
         label9.setText("Name:");
         label9.setBounds(300, 450, 80, 25);
-        textField = new JTextField();
-        textField.setBounds(380, 450, 165, 25);
-        panel.add(textField);
+        textField2 = new JTextField();
+        textField2.setBounds(380, 450, 165, 25);
+        panel.add(textField2);
         button = new JButton("Login");
         button.setBounds(335, 500, 150, 25);
         button.setActionCommand("login");

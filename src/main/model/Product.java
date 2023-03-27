@@ -79,6 +79,21 @@ public class Product implements Writable {
         return json;
     }
 
+//    // EFFECTS: returns a string that describes product's main features
+//    public String getString() {
+//        String usedString;
+//        if (used) {
+//            usedString = "USED";
+//        } else {
+//            usedString = "NEW";
+//        }
+//        if (onSale) {
+//            return title + "On Sale for: $" + salePrice + ", Regular: $" + price + ", " + category + " " + usedString;
+//        } else {
+//            return title + "Regular Price: $" + price + ", " + category + " " + usedString;
+//        }
+//    }
+
     // GETTERS
     public String getTitle() {
         return title;
