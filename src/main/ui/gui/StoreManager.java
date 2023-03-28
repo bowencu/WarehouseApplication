@@ -34,8 +34,7 @@ public class StoreManager extends JFrame implements ActionListener {
     private Person boss = new Person("Store Owner");
     private Warehouse warehouse;
 
-    // MODIFIES: this
-    // EFFECTS: offers methods available to a store manager
+    // EFFECTS: constructs a window for store manager actions
     public StoreManager(Warehouse warehouse) {
         panel = new JPanel();
         frame = new JFrame("Store Manager");

@@ -8,35 +8,44 @@
         {
             "Balance": 55,
             "Name": "Bowen",
-            "Personal Inventory": [
-                {
-                    "Used?": false,
-                    "Owner": "Bowen",
-                    "On Sale?": false,
-                    "Category": "APPLIANCES",
-                    "Price": 45,
-                    "Title": "Toaster",
-                    "Sale Price": -1
-                },
-                {
-                    "Used?": false,
-                    "Owner": "Bowen",
-                    "On Sale?": false,
-                    "Category": "APPLIANCES",
-                    "Price": 45,
-                    "Title": "Toaster",
-                    "Sale Price": -1
-                }
-            ]
+            "Personal Inventory": [{
+                "Used?": false,
+                "Owner": "Bowen",
+                "On Sale?": false,
+                "Category": "APPLIANCES",
+                "Price": 45,
+                "Title": "Toaster",
+                "Sale Price": -1
+            }]
         }
     ],
-    "Warehouse Inventory": [{
-        "Used?": false,
-        "Owner": "Store Owner",
-        "On Sale?": false,
-        "Category": "CLOTHING",
-        "Price": 55.01,
-        "Title": "UBC Sweater",
-        "Sale Price": -1
-    }]
+    "Warehouse Inventory": [
+        {
+            "Used?": false,
+            "Owner": "Store Owner",
+            "On Sale?": true,
+            "Category": "CLOTHING",
+            "Price": 55.01,
+            "Title": "UBC Sweater",
+            "Sale Price": 0.5501000000000005
+        },
+        {
+            "Used?": true,
+            "Owner": "Bowen",
+            "On Sale?": true,
+            "Category": "APPLIANCES",
+            "Price": 10,
+            "Title": "Toaster",
+            "Sale Price": 0.10000000000000009
+        },
+        {
+            "Used?": false,
+            "Owner": "Store Owner",
+            "On Sale?": true,
+            "Category": "AUTOMOTIVE",
+            "Price": 15000,
+            "Title": "School Bus",
+            "Sale Price": 150.00000000000014
+        }
+    ]
 }

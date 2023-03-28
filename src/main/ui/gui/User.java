@@ -33,6 +33,7 @@ public class User extends JPanel implements ActionListener, ListSelectionListene
     private Warehouse warehouse;
     private Person user;
 
+    // EFFECTS: constructs a window for users to view and modify personal account details
     public User(Warehouse warehouse, Person user) {
         super(new BorderLayout());
         this.warehouse = warehouse;

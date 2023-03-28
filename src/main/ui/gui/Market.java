@@ -11,8 +11,6 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Market extends JPanel implements ActionListener, ListSelectionListener {
@@ -36,6 +34,7 @@ public class Market extends JPanel implements ActionListener, ListSelectionListe
     private Warehouse warehouse;
     private Person user;
 
+    // EFFECTS: constructs a market window, allowing current user to make a purchase
     public Market(Warehouse warehouse, Person user) {
         super(new BorderLayout());
         this.warehouse = warehouse;
@@ -70,6 +69,7 @@ public class Market extends JPanel implements ActionListener, ListSelectionListe
         list.addListSelectionListener(this);
         list.setVisibleRowCount(35);
         listScrollPane = new JScrollPane(list);
+        listScrollPane.setSize(600, 500);
     }
 
     // MODIFIES: this
@@ -123,60 +123,91 @@ public class Market extends JPanel implements ActionListener, ListSelectionListe
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("range")) {
-            listModel.clear();
-            List<Product> filtered;
-            double min = Double.parseDouble(minPrice.getText());
-            double max = Double.parseDouble(maxPrice.getText());
-            filtered = warehouse.filterWithinPriceRange(min, max);
-            for (Product p : filtered) {
-                listModel.addElement(p.getTitle());
-            }
-            list = new JList<>(listModel);
+            filterPriceRange();
         } else if (e.getActionCommand().equals("sale")) {
-            listModel.clear();
-            List<Product> filtered;
-            boolean isSelected = onSale.isSelected();
-            filtered = warehouse.filterForSale(isSelected);
-            for (Product p : filtered) {
-                listModel.addElement(p.getTitle());
-            }
-            list = new JList<>(listModel);
+            filterSale();
         } else if (e.getActionCommand().equals("used")) {
-            listModel.clear();
-            List<Product> filtered;
-            boolean isSelected = isUsed.isSelected();
-            filtered = warehouse.filterByUsed(isSelected);
-            for (Product p : filtered) {
-                listModel.addElement(p.getTitle());
-            }
-            list = new JList<>(listModel);
+            filterUsed();
         } else if (e.getActionCommand().equals("category")) {
-            listModel.clear();
-            List<Product> filtered;
-            if (categories.getSelectedItem().toString().equals("ALL PRODUCTS")) {
-                filtered = warehouse.getInventory();
-            } else {
-                Category category = Category.valueOf(categories.getSelectedItem().toString());
-                filtered = warehouse.filterByCategory(category);
-            }
-            for (Product p : filtered) {
-                listModel.addElement(p.getTitle());
-            }
-            list = new JList<>(listModel);
+            filterCategory();
         } else if (e.getActionCommand().equals("buy")) {
-            for (Product p : warehouse.getInventory()) {
-                if (p.getTitle().equals(list.getSelectedValue().toString())) {
-                    warehouse.makeSale(p, user);
-                    if (warehouse.makeSale(p, user)) {
-                        list.remove(list.getSelectedIndex());
-                        label1 = new JLabel("You have successfully bought " + p.getTitle() + " for $" + p.getActualPrice());
-                        tempLabel(label1);
-                        panel.add(label1);
-                    } else {
-                        label2 = new JLabel("Insufficient Funds.");
-                        tempLabel(label2);
-                        panel.add(label2);
-                    }
+            buy();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: filters products in listModel that are in range [min, max]
+    private void filterPriceRange() {
+        listModel.clear();
+        List<Product> filtered;
+        double min = Double.parseDouble(minPrice.getText());
+        double max = Double.parseDouble(maxPrice.getText());
+        filtered = warehouse.filterWithinPriceRange(min, max);
+        for (Product p : filtered) {
+            listModel.addElement(p.getTitle());
+        }
+        list = new JList<>(listModel);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: filters products in listModel that are on sale
+    private void filterSale() {
+        listModel.clear();
+        List<Product> filtered;
+        boolean isSelected = onSale.isSelected();
+        filtered = warehouse.filterForSale(isSelected);
+        for (Product p : filtered) {
+            listModel.addElement(p.getTitle());
+        }
+        list = new JList<>(listModel);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: filters products in listModel that are used
+    private void filterUsed() {
+        listModel.clear();
+        List<Product> filtered;
+        boolean isSelected = isUsed.isSelected();
+        filtered = warehouse.filterByUsed(isSelected);
+        for (Product p : filtered) {
+            listModel.addElement(p.getTitle());
+        }
+        list = new JList<>(listModel);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: filters products in listModel that are on sale
+    private void filterCategory() {
+        listModel.clear();
+        List<Product> filtered;
+        if (categories.getSelectedItem().toString().equals("ALL PRODUCTS")) {
+            filtered = warehouse.getInventory();
+        } else {
+            Category category = Category.valueOf(categories.getSelectedItem().toString());
+            filtered = warehouse.filterByCategory(category);
+        }
+        for (Product p : filtered) {
+            listModel.addElement(p.getTitle());
+        }
+        list = new JList<>(listModel);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: allows user to buy product selected in list
+    private void buy() {
+        for (Product p : warehouse.getInventory()) {
+            if (p.getTitle().equals(list.getSelectedValue().toString())) {
+                warehouse.makeSale(p, user);
+                if (warehouse.makeSale(p, user)) {
+                    list.remove(list.getSelectedIndex());
+                    label1 = new JLabel("You have successfully bought " + p.getTitle() + " for $"
+                            + p.getActualPrice());
+                    tempLabel(label1);
+                    panel.add(label1);
+                } else {
+                    label2 = new JLabel("Insufficient Funds.");
+                    tempLabel(label2);
+                    panel.add(label2);
                 }
             }
         }
@@ -184,12 +215,10 @@ public class Market extends JPanel implements ActionListener, ListSelectionListe
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-//        if (!e.getValueIsAdjusting()) {
-//            buyButton.setEnabled(list.getSelectedIndex() != -1);
-//        }
+
     }
 
-    // EFFECTS: lets label only appear for 5 seconds
+    // EFFECTS: makes label only visible for 5 seconds
     private void tempLabel(JLabel label) {
         label.setBounds(100, 625, 400, 25);
         Timer timer = new Timer(5000, e -> {

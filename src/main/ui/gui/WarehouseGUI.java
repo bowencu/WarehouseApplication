@@ -34,6 +34,8 @@ public class WarehouseGUI extends JFrame implements ActionListener {
     private JButton button;
     private JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
     private JsonReader jsonReader = new JsonReader(JSON_STORE);
+    private ImageIcon image;
+    private JLabel lighthouse;
 
     // EFFECTS: calls the constructor to begin the Warehouse GUI
     public static void main(String[] args) {
@@ -48,8 +50,8 @@ public class WarehouseGUI extends JFrame implements ActionListener {
         frame.setSize(1000, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panel);
+        setImage();
         labelInit();
-
         newUser();
         login();
         addButton("Store Manager", 0, "storeManager");
@@ -83,6 +85,15 @@ public class WarehouseGUI extends JFrame implements ActionListener {
         panel.add(label9);
     }
 
+    // EFFECTS: sets up a background of a lighthouse image for login window
+    private void setImage() {
+        image = new ImageIcon(getClass().getResource("lighthouse.jpg"));
+        lighthouse = new JLabel(image);
+        //lighthouse.setSize(700, 425);
+        lighthouse.setBounds(350,100,600,425);
+        panel.add(lighthouse);
+    }
+
     // MODIFIES: this
     // EFFECTS: process command based on button presses
     @Override
@@ -113,14 +124,14 @@ public class WarehouseGUI extends JFrame implements ActionListener {
     // EFFECTS: setup layout for creating a new user
     private void newUser() {
         label2.setText("New User");
-        label2.setBounds(335, 100, 150, 25);
+        label2.setBounds(85, 100, 150, 25);
         label8.setText("Name:");
-        label8.setBounds(300, 150, 80, 25);
+        label8.setBounds(50, 150, 80, 25);
         textField1 = new JTextField();
-        textField1.setBounds(380, 150, 165, 25);
+        textField1.setBounds(130, 150, 165, 25);
         panel.add(textField1);
         button = new JButton("Create New User");
-        button.setBounds(335, 200, 150, 25);
+        button.setBounds(85, 200, 150, 25);
         button.setActionCommand("newUser");
         button.addActionListener(this);
         panel.add(button);
@@ -130,14 +141,14 @@ public class WarehouseGUI extends JFrame implements ActionListener {
     // EFFECTS: setup layout for existing users to log in to their account
     private void login() {
         label3.setText("Returning User");
-        label3.setBounds(335, 400, 150, 25);
+        label3.setBounds(85, 400, 150, 25);
         label9.setText("Name:");
-        label9.setBounds(300, 450, 80, 25);
+        label9.setBounds(50, 450, 80, 25);
         textField2 = new JTextField();
-        textField2.setBounds(380, 450, 165, 25);
+        textField2.setBounds(130, 450, 165, 25);
         panel.add(textField2);
         button = new JButton("Login");
-        button.setBounds(335, 500, 150, 25);
+        button.setBounds(85, 500, 150, 25);
         button.setActionCommand("login");
         button.addActionListener(this);
         panel.add(button);
