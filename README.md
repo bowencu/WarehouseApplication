@@ -29,7 +29,6 @@ customer by implementing ways for one to express their criteria through their br
 # Instructions for Grader
 
 - You can make purchases by removing products from the warehouse inventory and adding them to your personal inventory
-- You can generate the second required action related to adding Xs to a Y by...
 - You can filter products seen in the warehouse inventory by price range, discounted items, used items, and category
 - You can locate my visual component (image of a lighthouse) on the login window
 - You can save the state of my application by clicking the "save" button on the login window

@@ -26,6 +26,7 @@ public class Warehouse implements Writable {
         product.getOwner().removeFromInventory(product);
         product.makeUsed();
         inventory.add(product);
+        EventLog.getInstance().logEvent(new Event(product.getOwner().getName() + " is selling " + product.getTitle()));
     }
 
     // REQUIRES: product is in warehouse inventory
@@ -40,6 +41,8 @@ public class Warehouse implements Writable {
             buyer.makeTransaction(product);
             buyer.addToInventory(product);
             product.switchOwner(buyer);
+            EventLog.getInstance().logEvent(new Event(buyer.getName() + " bought " + product.getTitle() + " for $"
+                    + product.getActualPrice() + "."));
             return true;
         } else {
             return false;
@@ -48,8 +51,10 @@ public class Warehouse implements Writable {
 
     // MODIFIES: this
     // EFFECTS: adds product to warehouse inventory
-    public void addToInventory(Product product) {
-        inventory.add(product);
+    public void addToInventory(Product p) {
+        inventory.add(p);
+        EventLog.getInstance().logEvent(new Event(p.getTitle() + " added to Warehouse Inventory for $"
+                + p.getActualPrice()));
     }
 
     // REQUIRES: product is in warehouse inventory
@@ -57,18 +62,21 @@ public class Warehouse implements Writable {
     // EFFECTS: removes product from warehouse inventory
     public void removeFromInventory(Product product) {
         inventory.remove(product);
+        EventLog.getInstance().logEvent(new Event(product.getTitle() + " removed from Warehouse Inventory"));
     }
 
     // MODIFIES: this
     // EFFECTS: adds user to warehouse user list
     public void addToUsers(Person user) {
         users.add(user);
+        EventLog.getInstance().logEvent(new Event("Welcome " + user.getName() + "!"));
     }
 
     // MODIFIES: this
     // EFFECTS: removes user from warehouse user list
     public void removeFromUsers(Person user) {
         users.remove(user);
+        EventLog.getInstance().logEvent(new Event("Goodbye " + user.getName() + "!"));
     }
 
     // REQUIRES: low and high >= 0

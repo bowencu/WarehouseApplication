@@ -11,6 +11,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.List;
 
 public class Market extends JPanel implements ActionListener, ListSelectionListener {
@@ -195,13 +196,11 @@ public class Market extends JPanel implements ActionListener, ListSelectionListe
     // MODIFIES: this
     // EFFECTS: allows user to buy product selected in list
     private void buy() {
-        for (Product p : warehouse.getInventory()) {
-            if (p.getTitle().equals(list.getSelectedValue().toString())) {
-                warehouse.makeSale(p, user);
-                if (warehouse.makeSale(p, user)) {
-                    list.remove(list.getSelectedIndex());
-                    label1 = new JLabel("You have successfully bought " + p.getTitle() + " for $"
-                            + p.getActualPrice());
+        for (Product product : warehouse.getInventory()) {
+            if (product.getTitle().equals(list.getSelectedValue().toString())) {
+                if (warehouse.makeSale(product, user)) {
+                    label1 = new JLabel("You have successfully bought " + product.getTitle() + " for $"
+                            + product.getActualPrice());
                     tempLabel(label1);
                     panel.add(label1);
                 } else {

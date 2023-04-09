@@ -236,6 +236,9 @@ public class WarehouseTest {
 
     @Test
     public void addToInventoryTest() {
+        product1 = new Product("Truck", 50.0, Category.AUTOMOTIVE, owner);
+        product2 = new Product("Kettle", 100.0, Category.APPLIANCES, owner);
+        product3 = new Product("Jacket", 60.3, Category.CLOTHING, owner);
         warehouse.addToInventory(product1);
         assertEquals(1, warehouse.getInventory().size());
 
@@ -247,6 +250,9 @@ public class WarehouseTest {
 
     @Test
     public void removeFromInventoryTest() {
+        product1 = new Product("Sample1", 15, Category.OTHER, owner);
+        product2 = new Product("Sample2", 15, Category.OTHER, owner);
+        product3 = new Product("Sample3", 15, Category.OTHER, owner);
         warehouse.addToInventory(product2);
         warehouse.removeFromInventory(product2);
         assertEquals(0, warehouse.getInventory().size());

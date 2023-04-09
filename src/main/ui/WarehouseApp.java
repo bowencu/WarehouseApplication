@@ -1,9 +1,6 @@
 package ui;
 
-import model.Category;
-import model.Person;
-import model.Product;
-import model.Warehouse;
+import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -45,6 +42,9 @@ public class WarehouseApp {
         while (keepGoing) {
             command = input.next();
             if (command.equals("q")) {
+                for (Event e : EventLog.getInstance()) {
+                    System.out.println(e.toString());
+                }
                 keepGoing = false;
             } else {
                 processUser(command);

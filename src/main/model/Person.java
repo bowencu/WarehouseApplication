@@ -46,6 +46,7 @@ public class Person implements Writable {
     // EFFECTS: adds amount to current balance
     public void loadBalance(Double amount) {
         balance += amount;
+        EventLog.getInstance().logEvent(new Event(name + " has loaded $" + amount + " to balance."));
     }
 
     @Override

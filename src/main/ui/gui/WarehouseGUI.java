@@ -1,17 +1,18 @@
 package ui.gui;
 
+import model.Event;
+import model.EventLog;
 import model.Person;
 import model.Warehouse;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class WarehouseGUI extends JFrame implements ActionListener {
+public class WarehouseGUI extends JFrame implements ActionListener, WindowListener {
     // Graphical user interface of the Warehouse application
 
     private static final String JSON_STORE = "./data/warehouse.json";
@@ -48,7 +49,7 @@ public class WarehouseGUI extends JFrame implements ActionListener {
         warehouse.addToUsers(boss);
         panel = new JPanel();
         frame.setSize(1000, 700);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.add(panel);
         setImage();
         labelInit();
@@ -61,6 +62,7 @@ public class WarehouseGUI extends JFrame implements ActionListener {
         panel.setLayout(null);
         frame.setVisible(true);
         frame.setResizable(false);
+        frame.addWindowListener(this);
     }
 
     // EFFECTS: initializes label objects
@@ -206,6 +208,44 @@ public class WarehouseGUI extends JFrame implements ActionListener {
         timer.setRepeats(false);
         timer.start();
         frame.setVisible(true);
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        for (Event event : EventLog.getInstance()) {
+            System.out.println(event.toString());
+        }
+        System.exit(0);
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 
 }

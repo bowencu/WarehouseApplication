@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 
 public class User extends JPanel implements ActionListener, ListSelectionListener {
     // Graphical user interface for a user viewing personal information
@@ -133,11 +134,11 @@ public class User extends JPanel implements ActionListener, ListSelectionListene
             tempLabel(label2);
         } else if (e.getActionCommand().equals("sell")) {
             String productName = listModel.getElementAt(list.getSelectedIndex()).toString();
-            for (Product p : user.getInventory()) {
-                if (p.getTitle().equals(productName)) {
-                    p.changePrice(Double.parseDouble(price.getText()));
-                    warehouse.sell(p);
-                    label3 = new JLabel("Your " + p.getTitle() + " is now for sale for $" + p.getPrice());
+            for (Product product : user.getInventory()) {
+                if (product.getTitle().equals(productName)) {
+                    product.changePrice(Double.parseDouble(price.getText()));
+                    warehouse.sell(product);
+                    label3 = new JLabel("Your " + product.getTitle() + " is now for sale for $" + product.getPrice());
                     panel.add(label3);
                     tempLabel(label3);
                 }

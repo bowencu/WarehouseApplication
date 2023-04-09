@@ -38,6 +38,7 @@ public class Product implements Writable {
     public void markSale(double salePrice) {
         onSale = true;
         this.salePrice = salePrice;
+        EventLog.getInstance().logEvent(new Event(title + " is on sale for $" + salePrice + "."));
     }
 
     // MODIFIES: this
@@ -45,10 +46,12 @@ public class Product implements Writable {
     public void removeSale() {
         onSale = false;
         salePrice = -1.0;
+        EventLog.getInstance().logEvent(new Event(title + " is regular price for $" + price + "."));
     }
 
     public void changePrice(Double newPrice) {
         price = newPrice;
+        EventLog.getInstance().logEvent(new Event(title + " is selling for $" + getActualPrice() + "."));
     }
 
     // MODIFIES: this
@@ -78,21 +81,6 @@ public class Product implements Writable {
         json.put("Owner", owner.getName());
         return json;
     }
-
-//    // EFFECTS: returns a string that describes product's main features
-//    public String getString() {
-//        String usedString;
-//        if (used) {
-//            usedString = "USED";
-//        } else {
-//            usedString = "NEW";
-//        }
-//        if (onSale) {
-//            return title + "On Sale for: $" + salePrice + ", Regular: $" + price + ", " + category + " " + usedString;
-//        } else {
-//            return title + "Regular Price: $" + price + ", " + category + " " + usedString;
-//        }
-//    }
 
     // GETTERS
     public String getTitle() {
