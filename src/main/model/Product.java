@@ -34,7 +34,8 @@ public class Product implements Writable {
 
     // REQUIRES: 0 < salePrice < price
     // MODIFIES: this
-    // EFFECTS: mark a product as on sale by making onSale true and setting product's salePrice as salePrice
+    // EFFECTS: mark a product as on sale by making onSale true and setting product's salePrice as salePrice,
+    //          logs the event
     public void markSale(double salePrice) {
         onSale = true;
         this.salePrice = salePrice;
@@ -42,13 +43,17 @@ public class Product implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: remove the sale on a product by making onSale false and setting product's salePrice as -1.0
+    // EFFECTS: remove the sale on a product by making onSale false and setting product's salePrice as -1.0,
+    //          logs the event
     public void removeSale() {
         onSale = false;
         salePrice = -1.0;
         EventLog.getInstance().logEvent(new Event(title + " is regular price for $" + price + "."));
     }
 
+    // REQUIRES: newPrice >= 0
+    // MODIFIES: this
+    // EFFECTS: changes the price of this, logs the event
     public void changePrice(Double newPrice) {
         price = newPrice;
         EventLog.getInstance().logEvent(new Event(title + " is selling for $" + getActualPrice() + "."));
@@ -69,6 +74,7 @@ public class Product implements Writable {
         }
     }
 
+    // EFFECTS: creates and returns this as a JSONObject with all attributes
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

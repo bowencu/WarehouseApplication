@@ -76,5 +76,8 @@ Market, StoreManager, and User subtypes of it. Also, there will likely be duplic
 that can be reduced since they all concern a similar usage concerning the graphical user interface.
 
 
-Source for code in the model and test persistence packages:
+Code in the model and test persistence packages:
 https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+
+Code in Event and EventLog classes:
+https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git

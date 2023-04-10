@@ -10,26 +10,18 @@ import java.util.Iterator;
  * one EventLog in the system and that the system has global access
  * to the single instance of the EventLog.
  */
+
 public class EventLog implements Iterable<Event> {
 
-    /** the only EventLog in the system (Singleton Design Pattern) */
     private static EventLog theLog;
     private Collection<Event> events;
 
-    /**
-     * Prevent external construction.
-     * (Singleton Design Pattern).
-     */
+    // EFFECTS: constructs an event log with no events
     private EventLog() {
-        events = new ArrayList<Event>();
+        events = new ArrayList<>();
     }
 
-    /**
-     * Gets instance of EventLog - creates it
-     * if it doesn't already exist.
-     * (Singleton Design Pattern)
-     * @return  instance of EventLog
-     */
+    // EFFECTS: returns instance of EventLog, or creates it if it doesn't already exist
     public static EventLog getInstance() {
         if (theLog == null) {
             theLog = new EventLog();
@@ -37,22 +29,19 @@ public class EventLog implements Iterable<Event> {
         return theLog;
     }
 
-    /**
-     * Adds an event to the event log.
-     * @param e the event to be added
-     */
+    // EFFECTS: adds e to the event log
     public void logEvent(Event e) {
         events.add(e);
     }
 
-    /**
-     * Clears the event log and logs the event.
-     */
+    // MODIFIES: this
+    // EFFECTS: clears the event log and logs the event
     public void clear() {
         events.clear();
         logEvent(new Event("Event log cleared."));
     }
 
+    // EFFECTS: returns an iterator for events
     @Override
     public Iterator<Event> iterator() {
         return events.iterator();

@@ -43,12 +43,13 @@ public class Person implements Writable {
 
     // REQUIRES: amount > 0
     // MODIFIES: this
-    // EFFECTS: adds amount to current balance
+    // EFFECTS: adds amount to current balance, logs the event
     public void loadBalance(Double amount) {
         balance += amount;
         EventLog.getInstance().logEvent(new Event(name + " has loaded $" + amount + " to balance."));
     }
 
+    // EFFECTS: creates and returns this as a JSONObject with name, balance, and inventory attributes
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

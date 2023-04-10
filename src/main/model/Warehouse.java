@@ -21,7 +21,7 @@ public class Warehouse implements Writable {
 
     // REQUIRES: product is in person's inventory
     // MODIFIES: this and person
-    // EFFECTS: uploads product to warehouse, removes product from owner's inventory, and make it used
+    // EFFECTS: uploads product to warehouse, removes product from owner's inventory, and make it used, logs the event
     public void sell(Product product) {
         product.getOwner().removeFromInventory(product);
         product.makeUsed();
@@ -33,7 +33,8 @@ public class Warehouse implements Writable {
     // MODIFIES: this
     // EFFECTS: adds product to person's inventory, removes product from warehouse inventory, deducts appropriate
     //          product price from person's balance, changes ownership of product from seller to buyer, and adds
-    //          appropriate price to seller's balance return true if purchase is made, false otherwise
+    //          appropriate price to seller's balance return true if purchase is made, false otherwise,
+    //          logs the event
     public boolean makeSale(Product product, Person buyer) {
         if (product.getActualPrice() <= buyer.getBalance()) {
             inventory.remove(product);
@@ -50,7 +51,7 @@ public class Warehouse implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds product to warehouse inventory
+    // EFFECTS: adds product to warehouse inventory, logs the event
     public void addToInventory(Product p) {
         inventory.add(p);
         EventLog.getInstance().logEvent(new Event(p.getTitle() + " added to Warehouse Inventory for $"
@@ -59,21 +60,21 @@ public class Warehouse implements Writable {
 
     // REQUIRES: product is in warehouse inventory
     // MODIFIES: this
-    // EFFECTS: removes product from warehouse inventory
+    // EFFECTS: removes product from warehouse inventory, logs the event
     public void removeFromInventory(Product product) {
         inventory.remove(product);
         EventLog.getInstance().logEvent(new Event(product.getTitle() + " removed from Warehouse Inventory"));
     }
 
     // MODIFIES: this
-    // EFFECTS: adds user to warehouse user list
+    // EFFECTS: adds user to warehouse user list, logs the event
     public void addToUsers(Person user) {
         users.add(user);
         EventLog.getInstance().logEvent(new Event("Welcome back " + user.getName() + "!"));
     }
 
     // MODIFIES: this
-    // EFFECTS: removes user from warehouse user list
+    // EFFECTS: removes user from warehouse user list, logs the event
     public void removeFromUsers(Person user) {
         users.remove(user);
         EventLog.getInstance().logEvent(new Event("Goodbye " + user.getName() + "!"));
@@ -126,6 +127,7 @@ public class Warehouse implements Writable {
         return filteredInventory;
     }
 
+    // EFFECTS: creates and returns this as a JSONObject with all its users and products in inventory
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
