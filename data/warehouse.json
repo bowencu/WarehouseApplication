@@ -1,8 +1,42 @@
 {
-    "All Users": [{
-        "Balance": 0,
-        "Name": "Store Owner",
-        "Personal Inventory": []
-    }],
-    "Warehouse Inventory": []
+    "All Users": [
+        {
+            "Balance": 0,
+            "Name": "Store Owner",
+            "Personal Inventory": []
+        },
+        {
+            "Balance": 900.01,
+            "Name": "Bowen",
+            "Personal Inventory": [{
+                "Used?": false,
+                "Owner": "Bowen",
+                "On Sale?": false,
+                "Category": "CLOTHING",
+                "Price": 55,
+                "Title": "UBC Sweater",
+                "Sale Price": -1
+            }]
+        }
+    ],
+    "Warehouse Inventory": [
+        {
+            "Used?": false,
+            "Owner": "Store Owner",
+            "On Sale?": true,
+            "Category": "ELECTRONICS",
+            "Price": 2500,
+            "Title": "MacBook Pro",
+            "Sale Price": 2250
+        },
+        {
+            "Used?": true,
+            "Owner": "Bowen",
+            "On Sale?": false,
+            "Category": "APPLIANCES",
+            "Price": 20,
+            "Title": "Toaster",
+            "Sale Price": -1
+        }
+    ]
 }

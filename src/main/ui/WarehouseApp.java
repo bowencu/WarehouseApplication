@@ -14,9 +14,17 @@ public class WarehouseApp {
 
     private Warehouse warehouse;
     private Person boss;
-    private Scanner input;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private Scanner input;
+
+    public static void main(String[] args) {
+        try {
+            new WarehouseApp();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to run application: file not found");
+        }
+    }
 
     // EFFECTS: runs the warehouse application
     public WarehouseApp() throws FileNotFoundException {
@@ -76,20 +84,27 @@ public class WarehouseApp {
     // MODIFIES: this
     // EFFECTS: processes user command by signing in or creating a new user, and starting their visit
     private void processUser(String command) {
-        if (command.equals("l")) {
-            userLogin();
-        } else if (command.equals("m")) {
-            storeManager();
-            runWarehouse();
-        } else if (command.equals("n")) {
-            userNew();
-        } else if (command.equals("save")) {
-            saveWarehouse();
-        } else if (command.equals("open")) {
-            openWarehouse();
-        } else {
-            System.out.println("Selection not valid...");
-            runWarehouse();
+        switch (command) {
+            case "l":
+                userLogin();
+                break;
+            case "m":
+                storeManager();
+                runWarehouse();
+                break;
+            case "n":
+                userNew();
+                break;
+            case "save":
+                saveWarehouse();
+                break;
+            case "open":
+                openWarehouse();
+                break;
+            default:
+                System.out.println("Selection not valid...");
+                runWarehouse();
+                break;
         }
     }
 
@@ -140,16 +155,22 @@ public class WarehouseApp {
         System.out.println("\treg   -> remove discount from a select category of products");
         System.out.println("\tb     -> go back");
         String managerCommand = input.next();
-        if (managerCommand.equals("stock")) {
-            storeManagerStock();
-        } else if (managerCommand.equals("sale")) {
-            storeManagerSale();
-        } else if (managerCommand.equals("reg")) {
-            storeManagerReg();
-        } else if (managerCommand.equals("b")) {
-            runWarehouse();
-        } else {
-            System.out.println("Selection not valid...");
+        switch (managerCommand) {
+            case "stock":
+                storeManagerStock();
+                break;
+            case "sale":
+                storeManagerSale();
+                break;
+            case "reg":
+                storeManagerReg();
+                break;
+            case "b":
+                runWarehouse();
+                break;
+            default:
+                System.out.println("Selection not valid...");
+                break;
         }
     }
 

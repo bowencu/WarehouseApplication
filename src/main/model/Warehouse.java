@@ -69,7 +69,7 @@ public class Warehouse implements Writable {
     // EFFECTS: adds user to warehouse user list
     public void addToUsers(Person user) {
         users.add(user);
-        EventLog.getInstance().logEvent(new Event("Welcome " + user.getName() + "!"));
+        EventLog.getInstance().logEvent(new Event("Welcome back " + user.getName() + "!"));
     }
 
     // MODIFIES: this

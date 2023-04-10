@@ -1,11 +1,9 @@
 package persistence;
 
 import model.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.util.List;
 
 // Source:
 // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git

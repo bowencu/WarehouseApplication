@@ -15,6 +15,8 @@ import java.util.Iterator;
 public class User extends JPanel implements ActionListener, ListSelectionListener {
     // Graphical user interface for a user viewing personal information
 
+    private Warehouse warehouse;
+    private Person user;
     private JFrame frame;
     private JPanel panel;
     private JPanel topPanel;
@@ -31,8 +33,6 @@ public class User extends JPanel implements ActionListener, ListSelectionListene
     private JLabel label1;
     private JLabel label2;
     private JLabel label3;
-    private Warehouse warehouse;
-    private Person user;
 
     // EFFECTS: constructs a window for users to view and modify personal account details
     public User(Warehouse warehouse, Person user) {

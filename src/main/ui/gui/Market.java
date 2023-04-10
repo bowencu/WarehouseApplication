@@ -11,12 +11,13 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
 import java.util.List;
 
 public class Market extends JPanel implements ActionListener, ListSelectionListener {
     // Graphical user interface of Warehouse's marketplace
 
+    private Warehouse warehouse;
+    private Person user;
     private JFrame frame;
     private JPanel panel;
     private JScrollPane listScrollPane;
@@ -32,8 +33,6 @@ public class Market extends JPanel implements ActionListener, ListSelectionListe
     private JButton buyButton;
     private JLabel label1;
     private JLabel label2;
-    private Warehouse warehouse;
-    private Person user;
 
     // EFFECTS: constructs a market window, allowing current user to make a purchase
     public Market(Warehouse warehouse, Person user) {

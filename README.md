@@ -26,13 +26,55 @@ customer by implementing ways for one to express their criteria through their br
 - save the entire state of the warehouse inventory and individual shopper information (balances, inventories)
 - reload a previously saved state of warehouse to continue shopping with the same inventory and shopper information
 
-# Instructions for Grader
+## Instructions for Grader
 
 - You can make purchases by removing products from the warehouse inventory and adding them to your personal inventory
 - You can filter products seen in the warehouse inventory by price range, discounted items, used items, and category
 - You can locate my visual component (image of a lighthouse) on the login window
 - You can save the state of my application by clicking the "save" button on the login window
 - You can reload the state of my application by clicking the "open" button on the login window
+
+## Example of Logged Events (with date and time)
+
+Welcome Store Owner!
+
+UBC Sweater added to Warehouse Inventory for $55.0
+
+Toaster added to Warehouse Inventory for $44.99
+
+MacBook Pro added to Warehouse Inventory for $2500.0
+
+MacBook Pro is on sale for $2250.0.
+
+Welcome back Bowen!
+
+Bowen has loaded $1000.0 to balance.
+
+Store Owner has loaded $44.99 to balance.
+
+Bowen bought Toaster for $44.99.
+
+Store Owner has loaded $55.0 to balance.
+
+Bowen bought UBC Sweater for $55.0.
+
+Toaster is selling for $20.0.
+
+Bowen is selling Toaster
+
+
+## Phase 4: Task 3 Refactoring Ideas
+
+In the UML diagram, every association arrow that points to the Warehouse class has a 1 multiplicity of it. This 
+makes sense since there's only ever one Warehouse object when running the program. The singleton design pattern 
+would be well suited for this purpose so that any reference to a warehouse object would be the one and only 
+warehouse instance in the entire program. Secondly, each of the Market, StoreManager, and User classes represent a 
+window that could open when running WarehouseGUI. However, their association arrows are exactly the same as the all 
+have two associations of multiplicity 1 to the Warehouse and Person class. Since they are used for WarehouseGUI 
+purposes, a subtyping relationship could simplify association needed, by making WarehouseGUI the supertype, and 
+Market, StoreManager, and User subtypes of it. Also, there will likely be duplicated methods between the classes 
+that can be reduced since they all concern a similar usage concerning the graphical user interface.
+
 
 Source for code in the model and test persistence packages:
 https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git

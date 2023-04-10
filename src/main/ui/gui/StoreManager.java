@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 public class StoreManager extends JFrame implements ActionListener {
     // Graphical user interface for a store manager
 
+    private Person boss;
+    private Warehouse warehouse;
     private JPanel panel;
     private JFrame frame;
     private JLabel label1;
@@ -31,11 +33,10 @@ public class StoreManager extends JFrame implements ActionListener {
     private JTextField textFieldSale;
     private JCheckBox checkBox1;
     private JCheckBox checkBox2;
-    private Person boss = new Person("Store Owner");
-    private Warehouse warehouse;
 
     // EFFECTS: constructs a window for store manager actions
     public StoreManager(Warehouse warehouse) {
+        boss = new Person("Store Owner");
         panel = new JPanel();
         frame = new JFrame("Store Manager");
         frame.setSize(1000, 700);

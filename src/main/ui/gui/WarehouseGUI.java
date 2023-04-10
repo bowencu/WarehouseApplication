@@ -17,9 +17,11 @@ public class WarehouseGUI extends JFrame implements ActionListener, WindowListen
 
     private static final String JSON_STORE = "./data/warehouse.json";
 
-    private Warehouse warehouse = new Warehouse();
-    private Person boss = new Person("Store Owner");
-    private JFrame frame = new JFrame("Warehouse");
+    private Warehouse warehouse;
+    private Person boss;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private JFrame frame;
     private JPanel panel;
     private JLabel label1;
     private JLabel label2;
@@ -33,8 +35,6 @@ public class WarehouseGUI extends JFrame implements ActionListener, WindowListen
     private JTextField textField1;
     private JTextField textField2;
     private JButton button;
-    private JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
-    private JsonReader jsonReader = new JsonReader(JSON_STORE);
     private ImageIcon image;
     private JLabel lighthouse;
 
@@ -46,7 +46,12 @@ public class WarehouseGUI extends JFrame implements ActionListener, WindowListen
     // MODIFIES: this
     // EFFECTS: runs the Warehouse application for GUI
     public WarehouseGUI() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        warehouse = new Warehouse();
+        boss = new Person("Store Owner");
         warehouse.addToUsers(boss);
+        frame = new JFrame("Warehouse");
         panel = new JPanel();
         frame.setSize(1000, 700);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
