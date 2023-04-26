@@ -1,5 +1,5 @@
 # Marketplace Store
-### CPSC-210 Project by Bowen Cui
+### Project by Bowen Cui
 
 ## Description
 This application aims to produce similar functionality as an online shopping marketplace. The features provided aim 
@@ -26,7 +26,7 @@ customer by implementing ways for one to express their criteria through their br
 - save the entire state of the warehouse inventory and individual shopper information (balances, inventories)
 - reload a previously saved state of warehouse to continue shopping with the same inventory and shopper information
 
-## Instructions for Grader
+## Example Actions
 
 - You can make purchases by removing products from the warehouse inventory and adding them to your personal inventory
 - You can filter products seen in the warehouse inventory by price range, discounted items, used items, and category
@@ -63,7 +63,7 @@ Toaster is selling for $20.0.
 Bowen is selling Toaster
 
 
-## Phase 4: Task 3 Refactoring Ideas
+## Refactoring Ideas
 
 In the UML diagram, every association arrow that points to the Warehouse class has a 1 multiplicity of it. This 
 makes sense since there's only ever one Warehouse object when running the program. The singleton design pattern 
